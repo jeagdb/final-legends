@@ -11,25 +11,25 @@ public class GetPlayersDtoResponse {
         public final Integer id;
         public final String name;
         public final Integer level;
-        public final ClassDtoResponse classId;
+        public final VocationDtoResponse vocationId;
         public final StatDtoResponse statId;
         public final Integer experience;
 
-        public PlayerDtoResponse(Integer id, String name, Integer level, ClassDtoResponse classId, StatDtoResponse statId, Integer experience) {
+        public PlayerDtoResponse(Integer id, String name, Integer level, VocationDtoResponse vocationId, StatDtoResponse statId, Integer experience) {
             this.id = id;
             this.name = name;
             this.level = level;
-            this.classId = classId;
+            this.vocationId = vocationId;
             this.statId = statId;
             this.experience = experience;
         }
     }
 
-    public static class ClassDtoResponse {
+    public static class VocationDtoResponse {
         public final Integer id;
         public final String name;
 
-        public ClassDtoResponse(Integer id, String name) {
+        public VocationDtoResponse(Integer id, String name) {
             this.id = id;
             this.name = name;
         }

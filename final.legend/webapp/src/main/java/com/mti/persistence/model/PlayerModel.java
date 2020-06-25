@@ -16,11 +16,11 @@ public class PlayerModel {
     private Integer level;
 
     @ManyToOne
-    @JoinColumn(name="classId", referencedColumnName = "id")
-    private ClassModel classModel;
+    @JoinColumn(name="vocation_id", referencedColumnName = "id")
+    private VocationModel vocationModel;
 
     @ManyToOne
-    @JoinColumn(name="statId", referencedColumnName = "id")
+    @JoinColumn(name="stat_id", referencedColumnName = "id")
     private StatModel statModel;
 
     @Column
@@ -29,11 +29,11 @@ public class PlayerModel {
     public PlayerModel() {
     }
 
-    public PlayerModel(Integer id, String name, Integer level, ClassModel classModel, StatModel statModel, Integer experience) {
+    public PlayerModel(Integer id, String name, Integer level, VocationModel vocationModel, StatModel statModel, Integer experience) {
         this.id = id;
         this.name = name;
         this.level = level;
-        this.classModel = classModel;
+        this.vocationModel = vocationModel;
         this.statModel = statModel;
         this.experience = experience;
     }
@@ -62,12 +62,12 @@ public class PlayerModel {
         this.level = level;
     }
 
-    public ClassModel getClassModel() {
-        return classModel;
+    public VocationModel getVocationModel() {
+        return vocationModel;
     }
 
-    public void setClassModel(ClassModel classModel) {
-        this.classModel = classModel;
+    public void setVocationModel(VocationModel vocationModel) {
+        this.vocationModel = vocationModel;
     }
 
     public StatModel getStatModel() {

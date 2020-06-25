@@ -1,20 +1,18 @@
 package com.mti.modeltoentity;
 
 import com.mti.domain.entity.PlayerEntity;
-import com.mti.domain.entity.StatEntity;
 import com.mti.legendsdb.utils.scope.ConvertService;
 import com.mti.persistence.model.PlayerModel;
-import com.mti.persistence.model.StatModel;
 import utils.Converter;
 
 @ConvertService
 public class PlayerModelToEntity implements Converter.Reversible<PlayerModel, PlayerEntity> {
 
-    private final ClassModelToEntity classModelToEntity;
+    private final VocationModelToEntity vocationModelToEntity;
     private final StatModelToEntity statModelToEntity;
 
-    public PlayerModelToEntity(ClassModelToEntity classModelToEntity, StatModelToEntity statModelToEntity) {
-        this.classModelToEntity = classModelToEntity;
+    public PlayerModelToEntity(VocationModelToEntity vocationModelToEntity, StatModelToEntity statModelToEntity) {
+        this.vocationModelToEntity = vocationModelToEntity;
         this.statModelToEntity = statModelToEntity;
     }
 
@@ -23,7 +21,7 @@ public class PlayerModelToEntity implements Converter.Reversible<PlayerModel, Pl
         return new PlayerEntity(from.getId(),
                 from.getName(),
                 from.getLevel(),
-                classModelToEntity.convert(from.getClassModel()),
+                vocationModelToEntity.convert(from.getVocationModel()),
                 statModelToEntity.convert(from.getStatModel()),
                 from.getExperience());
     }
@@ -33,7 +31,7 @@ public class PlayerModelToEntity implements Converter.Reversible<PlayerModel, Pl
         return new PlayerModel(from.id,
                 from.name,
                 from.level,
-                classModelToEntity.revertConvert(from.classEntity),
+                vocationModelToEntity.revertConvert(from.vocationEntity),
                 statModelToEntity.revertConvert(from.statEntity),
                 from.experience);
     }

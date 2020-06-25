@@ -3,8 +3,8 @@ package com.mti.persistence.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="class")
-public class ClassModel {
+@Table(name="vocation")
+public class VocationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,10 +12,10 @@ public class ClassModel {
     @Column
     private String name;
 
-    public ClassModel() {
+    public VocationModel() {
     }
 
-    public ClassModel(Integer id, String name) {
+    public VocationModel(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

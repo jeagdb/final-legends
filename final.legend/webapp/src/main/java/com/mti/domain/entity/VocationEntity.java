@@ -1,10 +1,10 @@
 package com.mti.domain.entity;
 
-public class ClassEntity {
+public class VocationEntity {
     public final Integer id;
     public final String name;
 
-    public ClassEntity(Integer id, String name) {
+    public VocationEntity(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

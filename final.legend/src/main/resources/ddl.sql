@@ -12,20 +12,20 @@ CREATE TABLE IF NOT EXISTS `legendsdb`.`player` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `level` INT(11) NOT NULL,
-  `classId` INT(11) NOT NULL,
-  `statId` INT(11) NOT NULL,
+  `vocation_id` INT(11) NOT NULL,
+  `stat_id` INT(11) NOT NULL,
   `experience` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_class_player_idx` (`classId` ASC),
-  INDEX `fk_stat_player_idx` (`statId` ASC),
+  INDEX `fk_vocation_player_idx` (`vocation_id` ASC),
+  INDEX `fk_stat_player_idx` (`stat_id` ASC),
   UNIQUE (`name`),
-  CONSTRAINT `fk_class_player`
-  FOREIGN KEY (`classId`)
-  REFERENCES `legendsdb`.`class` (`id`)
+  CONSTRAINT `fk_vocation_player`
+  FOREIGN KEY (`vocation_id`)
+  REFERENCES `legendsdb`.`vocation` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION,
   CONSTRAINT `fk_stat_player`
-  FOREIGN KEY (`statId`)
+  FOREIGN KEY (`stat_id`)
   REFERENCES `legendsdb`.`stat` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION)
@@ -50,9 +50,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `legendsdb`.`class`
+-- Table `legendsdb`.`vocation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `legendsdb`.`class` (
+CREATE TABLE IF NOT EXISTS `legendsdb`.`vocation` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -67,13 +67,13 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `legendsdb`.`monster` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `statId` INT(11) NOT NULL,
+  `stat_id` INT(11) NOT NULL,
   `xp` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stat_monster_idx` (`statId` ASC),
+  INDEX `fk_stat_monster_idx` (`stat_id` ASC),
   UNIQUE (`name`),
   CONSTRAINT `fk_stat_monster`
-  FOREIGN KEY (`statId`)
+  FOREIGN KEY (`stat_id`)
   REFERENCES `legendsdb`.`stat` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION)
@@ -108,21 +108,21 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `legendsdb`.`class_skill`
+-- Table `legendsdb`.`vocation_skill`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `legendsdb`.`class_skill` (
-  `classId` INT(11) NOT NULL,
-  `skillId` INT(11) NOT NULL,
-  INDEX `fk_class_idx` (`classId` ASC),
-  INDEX `fk_skill_idx` (`skillId` ASC),
-  UNIQUE (`classId`, `skillId`),
-  CONSTRAINT `fk_class`
-  FOREIGN KEY (`classId`)
-  REFERENCES `legendsdb`.`class` (`id`)
+CREATE TABLE IF NOT EXISTS `legendsdb`.`vocation_skill` (
+  `vocation_id` INT(11) NOT NULL,
+  `skill_id` INT(11) NOT NULL,
+  INDEX `fk_vocation_idx` (`vocation_id` ASC),
+  INDEX `fk_skill_idx` (`skill_id` ASC),
+  UNIQUE (`vocation_id`, `skill_id`),
+  CONSTRAINT `fk_vocation`
+  FOREIGN KEY (`vocation_id`)
+  REFERENCES `legendsdb`.`vocation` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION,
   CONSTRAINT `fk_skill`
-  FOREIGN KEY (`skillId`)
+  FOREIGN KEY (`skill_id`)
   REFERENCES `legendsdb`.`skill` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION)
@@ -134,18 +134,18 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `legendsdb`.`monster_skill`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `legendsdb`.`monster_skill` (
-  `monsterId` INT(11) NOT NULL,
-  `skillId` INT(11) NOT NULL,
-  INDEX `fk_monster_idx` (`monsterId` ASC),
-  INDEX `fk_skill2_idx` (`skillId` ASC),
-  UNIQUE (`monsterId`, `skillId`),
+  `monster_id` INT(11) NOT NULL,
+  `skill_id` INT(11) NOT NULL,
+  INDEX `fk_monster_idx` (`monster_id` ASC),
+  INDEX `fk_skill2_idx` (`skill_id` ASC),
+  UNIQUE (`monster_id`, `skill_id`),
   CONSTRAINT `fk_monster`
-  FOREIGN KEY (`monsterId`)
+  FOREIGN KEY (`monster_id`)
   REFERENCES `legendsdb`.`monster` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION,
   CONSTRAINT `fk_skill2`
-  FOREIGN KEY (`skillId`)
+  FOREIGN KEY (`skill_id`)
   REFERENCES `legendsdb`.`skill` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION)
@@ -157,18 +157,18 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `legendsdb`.`dungeon_monster`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `legendsdb`.`dungeon_monster` (
-  `dungeonId` INT(11) NOT NULL,
-  `monsterId` INT(11) NOT NULL,
-  INDEX `fk_dungeon_idx` (`monsterId` ASC),
-  INDEX `fk_monster2_idx` (`monsterId` ASC),
-  UNIQUE (`dungeonId`, `monsterId`),
+  `dungeon_id` INT(11) NOT NULL,
+  `monster_id` INT(11) NOT NULL,
+  INDEX `fk_dungeon_idx` (`monster_id` ASC),
+  INDEX `fk_monster2_idx` (`monster_id` ASC),
+  UNIQUE (`dungeon_id`, `monster_id`),
   CONSTRAINT `fk_dungeon`
-  FOREIGN KEY (`dungeonId`)
+  FOREIGN KEY (`dungeon_id`)
   REFERENCES `legendsdb`.`dungeon` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION,
   CONSTRAINT `fk_monster2`
-  FOREIGN KEY (`monsterId`)
+  FOREIGN KEY (`monster_id`)
   REFERENCES `legendsdb`.`monster` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION)
@@ -177,9 +177,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `legendsdb`.`class`
+-- Table `legendsdb`.`vocation`
 -- -----------------------------------------------------
-INSERT INTO `legendsdb`.`class`(`name`)
+INSERT INTO `legendsdb`.`vocation`(`name`)
 VALUES('Mage'),
 ('Guerrier'),
 ('Rôdeur');
@@ -207,11 +207,11 @@ VALUES ('Boule de feu', 30, 20),
 
 
 -- -----------------------------------------------------
--- Table `legendsdb`.`class_skill`
+-- Table `legendsdb`.`vocation_skill`
 -- -----------------------------------------------------
-INSERT INTO `legendsdb`.`class_skill`
-(`classId`,
-`skillId`)
+INSERT INTO `legendsdb`.`vocation_skill`
+(`vocation_id`,
+`skill_id`)
 VALUES (1, 1),
 (1, 2),
 (1, 3),
@@ -250,7 +250,7 @@ VALUES (100, 0, 6, 5, 1, 3),
 -- -----------------------------------------------------
 -- Table `legendsdb`.`monster`
 -- -----------------------------------------------------
-INSERT INTO `legendsdb`.`monster`(`name`, `statId`, `xp`)
+INSERT INTO `legendsdb`.`monster`(`name`, `stat_id`, `xp`)
 VALUES ('Gobelin', 1, 25),
 ('Gobelin berserk', 2, 50),
 ('Gobelin chef', 3, 100),
@@ -265,7 +265,7 @@ VALUES ('Gobelin', 1, 25),
 -- -----------------------------------------------------
 -- Table `legendsdb`.`monster_skill`
 -- -----------------------------------------------------
-INSERT INTO `legendsdb`.`monster_skill`(`monsterId`, `skillId`)
+INSERT INTO `legendsdb`.`monster_skill`(`monster_id`, `skill_id`)
 VALUES(1, 10),
 (2, 10),
 (3, 10),
@@ -283,7 +283,7 @@ VALUES(1, 10),
 -- -----------------------------------------------------
 -- Table `legendsdb`.`dungeon_monster`
 -- -----------------------------------------------------
-INSERT INTO `legendsdb`.`dungeon_monster`(`dungeonId`, `monsterId`)
+INSERT INTO `legendsdb`.`dungeon_monster`(`dungeon_id`, `monster_id`)
 VALUES (1, 1),
 (1, 4),
 (1, 7),

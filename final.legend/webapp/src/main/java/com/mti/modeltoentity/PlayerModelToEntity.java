@@ -8,7 +8,7 @@ import com.mti.persistence.model.StatModel;
 import utils.Converter;
 
 @ConvertService
-public class PlayerModelToEntity implements Converter<PlayerModel, PlayerEntity> {
+public class PlayerModelToEntity implements Converter.Reversible<PlayerModel, PlayerEntity> {
 
     private final ClassModelToEntity classModelToEntity;
     private final StatModelToEntity statModelToEntity;
@@ -26,5 +26,15 @@ public class PlayerModelToEntity implements Converter<PlayerModel, PlayerEntity>
                 classModelToEntity.convert(from.getClassModel()),
                 statModelToEntity.convert(from.getStatModel()),
                 from.getExperience());
+    }
+
+    @Override
+    public PlayerModel revertConvert(PlayerEntity from) {
+        return new PlayerModel(from.id,
+                from.name,
+                from.level,
+                classModelToEntity.revertConvert(from.classEntity),
+                statModelToEntity.revertConvert(from.statEntity),
+                from.experience);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlayerRepository extends CrudRepository<PlayerModel, Integer> {
 
-    @Query(value = "", nativeQuery = false)
-    void getPlayerStat(final String login);
+    @Query(value = "SELECT stat.* FROM stat INNER JOIN player p ON stat.id = p.statId WHERE p.id = ?1", nativeQuery = true)
+    void getPlayerStat(final Integer id);
 
 }

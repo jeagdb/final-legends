@@ -1,14 +1,14 @@
-package com.mti.legendsdb.view.playercontroller;
+package com.mti.view.dto.player;
 
-public class PutPlayerDtoRequest {
+public class PutPlayerDtoResponse {
     public final Integer id;
     public final String name;
     public final Integer level;
-    public final VocationDtoRequest vocationId;
-    public final StatDtoRequest statId;
+    public final VocationDtoResponse vocationId;
+    public final StatDtoResponse statId;
     public final Integer experience;
 
-    public PutPlayerDtoRequest(Integer id, String name, Integer level, VocationDtoRequest vocationId, StatDtoRequest statId, Integer experience) {
+    public PutPlayerDtoResponse(Integer id, String name, Integer level, VocationDtoResponse vocationId, StatDtoResponse statId, Integer experience) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -17,17 +17,17 @@ public class PutPlayerDtoRequest {
         this.experience = experience;
     }
 
-    public static class VocationDtoRequest {
+    public static class VocationDtoResponse {
         public final Integer id;
         public final String name;
 
-        public VocationDtoRequest(Integer id, String name) {
+        public VocationDtoResponse(Integer id, String name) {
             this.id = id;
             this.name = name;
         }
     }
 
-    public static class StatDtoRequest {
+    public static class StatDtoResponse {
         public final Integer id;
         public final Integer health;
         public final Integer mana;
@@ -36,7 +36,7 @@ public class PutPlayerDtoRequest {
         public final Integer intelligence;
         public final Integer agility;
 
-        public StatDtoRequest(Integer id, Integer health, Integer mana, Integer attack, Integer defense, Integer intelligence, Integer agility) {
+        public StatDtoResponse(Integer id, Integer health, Integer mana, Integer attack, Integer defense, Integer intelligence, Integer agility) {
             this.id = id;
             this.health = health;
             this.mana = mana;
@@ -46,5 +46,4 @@ public class PutPlayerDtoRequest {
             this.agility = agility;
         }
     }
-
 }

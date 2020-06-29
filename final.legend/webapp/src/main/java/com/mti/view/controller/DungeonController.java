@@ -1,4 +1,4 @@
-package com.mti.view;
+package com.mti.view.controller;
 
 import org.springframework.web.bind.annotation.*;
 

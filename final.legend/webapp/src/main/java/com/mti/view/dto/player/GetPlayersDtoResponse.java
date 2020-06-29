@@ -1,4 +1,4 @@
-package com.mti.legendsdb.view.playercontroller;
+package com.mti.view.dto.player;
 
 public class GetPlayersDtoResponse {
     public final Iterable<PlayerDtoResponse> allPlayers;

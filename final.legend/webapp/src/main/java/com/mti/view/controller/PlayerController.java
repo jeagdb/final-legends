@@ -1,12 +1,12 @@
-package com.mti.view;
+package com.mti.view.controller;
 
 import com.mti.domain.entity.PlayerEntity;
 import com.mti.domain.entity.StatEntity;
 import com.mti.domain.entity.VocationEntity;
 import com.mti.domain.service.PlayerService;
-import com.mti.legendsdb.view.playercontroller.GetPlayersDtoResponse;
-import com.mti.legendsdb.view.playercontroller.PutPlayerDtoRequest;
-import com.mti.legendsdb.view.playercontroller.PutPlayerDtoResponse;
+import com.mti.view.dto.player.GetPlayersDtoResponse;
+import com.mti.view.dto.player.PutPlayerDtoRequest;
+import com.mti.view.dto.player.PutPlayerDtoResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -33,7 +33,7 @@ public class PlayerController {
         List<PlayerEntity> players = playerService.findAllPlayers();
         return new GetPlayersDtoResponse(players.stream().map(playerEntity -> {
             var vocationDto = new GetPlayersDtoResponse.VocationDtoResponse(playerEntity.vocationEntity.name);
-            var statDto = new GetPlayersDtoResponse.StatDtoResponse(playerEntity.statEntity.id,
+            var statDto = new GetPlayersDtoResponse.StatDtoResponse(
                     playerEntity.statEntity.health, playerEntity.statEntity.mana, playerEntity.statEntity.attack,
                     playerEntity.statEntity.defense, playerEntity.statEntity.intelligence, playerEntity.statEntity.agility);
             return new GetPlayersDtoResponse.PlayerDtoResponse(playerEntity.name, playerEntity.level,

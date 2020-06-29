@@ -1,23 +1,39 @@
 package com.mti.domain.service;
 
 import com.mti.domain.entity.DungeonEntity;
+import com.mti.domain.entity.DungeonInfoEntity;
+import com.mti.domain.entity.MonsterEntity;
 import com.mti.modeltoentity.DungeonModelToEntity;
+import com.mti.modeltoentity.MonsterModelToEntity;
+import com.mti.persistence.model.DungeonModel;
+import com.mti.persistence.model.MonsterModel;
 import com.mti.persistence.repository.DungeonRepository;
+import com.mti.persistence.repository.MonsterRepository;
 import org.springframework.stereotype.Service;
 import utils.IterableUtils;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class DungeonService {
 
-    private DungeonRepository dungeonRepository;
-    public DungeonModelToEntity dungeonModelToEntity;
+    @Resource
+    DungeonRepository dungeonRepository;
 
-    public DungeonService(final DungeonRepository dungeonRepository, final DungeonModelToEntity dungeonModelToEntity) {
-        this.dungeonRepository = dungeonRepository;
-        this.dungeonModelToEntity = dungeonModelToEntity;
+    @Resource
+    DungeonModelToEntity dungeonModelToEntity;
+
+    @Resource
+    MonsterModelToEntity monsterModelToEntity;
+
+    @Resource
+    MonsterRepository monsterRepository;
+
+    public DungeonService() {
     }
 
     public List<DungeonEntity> getAllDungeons() {
@@ -25,5 +41,20 @@ public class DungeonService {
         return allDungeons.stream()
                 .map(dungeonModel -> dungeonModelToEntity.convert(dungeonModel))
                 .collect(Collectors.toList());
+    }
+
+    public DungeonInfoEntity getIntoDungeonById(Integer dungeonId) {
+        final Optional<DungeonModel> dungeonModel = dungeonRepository.findById(dungeonId);
+        if (dungeonModel.isEmpty()) {
+            // error
+        }
+        DungeonEntity dungeonEntity = dungeonModelToEntity.convert(dungeonModel.get());
+        final Iterable<MonsterModel> monsterModels = monsterRepository.findAll();
+        List<MonsterEntity> monsterEntities = new ArrayList<>();
+        monsterModels.forEach(monsterModel -> {
+            monsterEntities.add(monsterModelToEntity.convert(monsterModel));
+        });
+        DungeonInfoEntity dungeonInfoEntity = new DungeonInfoEntity(dungeonEntity.name, monsterEntities);
+        return dungeonInfoEntity;
     }
 }

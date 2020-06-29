@@ -10,13 +10,14 @@ import com.mti.view.dto.player.GetPlayersDtoResponse;
 import com.mti.view.dto.player.PutPlayerDtoRequest;
 import com.mti.view.dto.player.PutPlayerDtoResponse;
 import org.springframework.web.bind.annotation.*;
+import utils.log.CanLog;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/player")
-public class PlayerController {
+public class PlayerController implements CanLog {
 
     private PlayerService playerService;
     private VocationService vocationService;
@@ -50,11 +51,11 @@ public class PlayerController {
     public PutPlayerDtoResponse putPlayer(final @RequestBody PutPlayerDtoRequest putPlayerDtoRequest) {
         VocationEntity vocationEntity = vocationService.getVocationByName(putPlayerDtoRequest.vocation);
         if (vocationEntity == null) {
-            //error -> prévenir le joueur que la vocation est mal écrite
+            logger().warn("PlayerController.putPlayer: vocationEntity is null");
         }
         StatEntity statEntity = statService.generatePlayerStatsWithVocation(vocationEntity.id);
         if (statEntity == null) {
-            //error -> prévenir le joueur que la génération des statistiques à eu un pb
+            logger().warn("PlayerController.putPlayer: statEntity is null");
         }
         final var entity = new PlayerEntity(
                 1,

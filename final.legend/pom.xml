@@ -3,11 +3,33 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
+            </plugin>
 
-	<modules>
-		<module>api</module>
-		<module>webapp</module>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+        </plugins>
+
+
+    </build>
+
+    <modules>
 		<module>utils</module>
+		<module>core</module>
+		<module>webservice</module>
 	</modules>
 
 	<parent>
@@ -26,6 +48,7 @@
 	<properties>
 		<java.version>14</java.version>
 		<versions.project>0.0.1-SNAPSHOT</versions.project>
+		<start-class>com.mti.legend.FinalLegendApplication</start-class>
 	</properties>
 
 	<dependencyManagement>
@@ -36,13 +59,18 @@
 				<version>${versions.project}</version>
 			</dependency>
 
-
 			<dependency>
 				<groupId>com.mti</groupId>
-				<artifactId>api</artifactId>
+				<artifactId>webservice</artifactId>
 				<version>${versions.project}</version>
 			</dependency>
 
+
+			<dependency>
+				<groupId>com.mti</groupId>
+				<artifactId>core</artifactId>
+				<version>${versions.project}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.mti</groupId>
@@ -63,6 +91,7 @@
 				<artifactId>utils-spring</artifactId>
 				<version>${versions.project}</version>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

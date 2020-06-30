@@ -56,4 +56,13 @@ public class PlayerService implements CanLog{
         logger().info("PlayerService.save: ending transaction");
         return playerModelToEntity.convert(resultModel);
     }
+
+    public PlayerEntity getPlayer(Integer id) {
+        Optional<PlayerModel> playerModel = playerRepository.findById(id);
+        if (playerModel.isEmpty()) {
+            // error
+        }
+        PlayerEntity playerEntity = playerModelToEntity.convert(playerModel.get());
+        return playerEntity;
+    }
 }

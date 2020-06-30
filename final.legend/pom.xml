@@ -38,13 +38,6 @@
 
 			<dependency>
 				<groupId>com.mti</groupId>
-				<artifactId>api</artifactId>
-				<version>${versions.project}</version>
-			</dependency>
-
-
-			<dependency>
-				<groupId>com.mti</groupId>
 				<artifactId>utils</artifactId>
 				<version>${versions.project}</version>
 			</dependency>

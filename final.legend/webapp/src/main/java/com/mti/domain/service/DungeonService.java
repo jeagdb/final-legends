@@ -11,6 +11,7 @@ import com.mti.persistence.repository.DungeonRepository;
 import com.mti.persistence.repository.MonsterRepository;
 import org.springframework.stereotype.Service;
 import utils.IterableUtils;
+import utils.log.CanLog;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class DungeonService {
+public class DungeonService implements CanLog {
 
     @Resource
     DungeonRepository dungeonRepository;
@@ -46,7 +47,7 @@ public class DungeonService {
     public DungeonInfoEntity getIntoDungeonById(Integer dungeonId) {
         final Optional<DungeonModel> dungeonModel = dungeonRepository.findById(dungeonId);
         if (dungeonModel.isEmpty()) {
-            // error
+            logger().warn("DungeonService.getIntoDungeonById: dungeonModel is empty");
         }
         DungeonEntity dungeonEntity = dungeonModelToEntity.convert(dungeonModel.get());
         final Iterable<MonsterModel> monsterModels = monsterRepository.findAll();

@@ -1,10 +1,6 @@
 package com.mti.persistence.repository;
 
 import com.mti.persistence.model.SkillModel;
-<<<<<<< HEAD
-import com.mti.persistence.model.StatModel;
-=======
->>>>>>> in PlayerController : create getPlayerSkills route
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

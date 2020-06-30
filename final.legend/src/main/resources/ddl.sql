@@ -111,8 +111,10 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `legendsdb`.`vocation_skill`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `legendsdb`.`vocation_skill` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `vocation_id` INT(11) NOT NULL,
   `skill_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_vocation_idx` (`vocation_id` ASC),
   INDEX `fk_skill_idx` (`skill_id` ASC),
   UNIQUE (`vocation_id`, `skill_id`),
@@ -134,8 +136,10 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `legendsdb`.`monster_skill`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `legendsdb`.`monster_skill` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `monster_id` INT(11) NOT NULL,
   `skill_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_monster_idx` (`monster_id` ASC),
   INDEX `fk_skill2_idx` (`skill_id` ASC),
   UNIQUE (`monster_id`, `skill_id`),

@@ -1,30 +1,44 @@
 package com.mti.domain.service;
 
 import com.mti.domain.entity.PlayerEntity;
+import com.mti.domain.entity.SkillEntity;
 import com.mti.modeltoentity.PlayerModelToEntity;
+import com.mti.modeltoentity.SkillModelToEntity;
 import com.mti.persistence.model.PlayerModel;
+import com.mti.persistence.model.SkillModel;
 import com.mti.persistence.repository.PlayerRepository;
+import com.mti.persistence.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utils.IterableUtils;
 import utils.log.CanLog;
+
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PlayerService implements CanLog{
 
-    private PlayerRepository playerRepository;
+    @Resource
+    PlayerRepository playerRepository;
+
+    @Resource
+    SkillRepository skillRepository;
+
+    @Resource
     public PlayerModelToEntity playerModelToEntity;
 
-    public PlayerService(final PlayerRepository playerRepository, final PlayerModelToEntity playerModelToEntity) {
-        this.playerRepository = playerRepository;
-        this.playerModelToEntity = playerModelToEntity;
+    public PlayerService() {
     }
 
-    public Integer getDamagesPlayerSkill(Integer skillId) {
-        // skill reposition
-        return 10;
+    public SkillEntity getDamagesPlayerSkill(Integer skillId) {
+        Optional<SkillModel> skillModel = skillRepository.findById(skillId);
+        if (skillModel.isEmpty()) {
+            logger().warn("PlayerService.getDamagesPlayerSkill: skillModel is empty.");
+        }
+        return new SkillModelToEntity().convert(skillModel.get());
     }
 
     public List<PlayerEntity> findAllPlayers() {

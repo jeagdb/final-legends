@@ -1,11 +1,14 @@
 package com.mti.persistence.repository;
 
+import com.mti.persistence.model.SkillModel;
 import com.mti.persistence.model.StatModel;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface SkillRepository extends CrudRepository<StatModel, Integer> {
+@Repository
+public interface SkillRepository extends CrudRepository<SkillModel, Integer> {
     @Override
-    Optional<StatModel> findById(Integer integer);
+    Optional<SkillModel> findById(Integer integer);
 }

@@ -2,14 +2,13 @@ package com.mti.view.controller;
 
 import com.mti.domain.entity.DungeonEntity;
 import com.mti.domain.entity.DungeonInfoEntity;
+import com.mti.domain.entity.SkillEntity;
 import com.mti.domain.service.DungeonService;
 import com.mti.domain.service.MonsterService;
+import com.mti.domain.service.MonsterSkillService;
 import com.mti.domain.service.PlayerService;
 import com.mti.dtotoentity.GetDungeonInfoDtoResponseToEntity;
-import com.mti.view.dto.player.AttackDungeonDtoRequest;
-import com.mti.view.dto.player.AttackDungeonDtoResponse;
-import com.mti.view.dto.player.GetAllDungeonsDtoResponse;
-import com.mti.view.dto.player.GetDungeonInfoDtoResponse;
+import com.mti.view.dto.player.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +26,7 @@ public class DungeonController {
     public PlayerService playerService;
 
     @Resource
-    public MonsterService monsterService;
+    public MonsterSkillService monsterSkillService;
 
     @Resource
     public GetDungeonInfoDtoResponseToEntity getDungeonInfoDtoResponseToEntity;
@@ -49,8 +48,12 @@ public class DungeonController {
 
     @PutMapping(path = "{id}")
     public AttackDungeonDtoResponse attackDungeonMonster(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
-        Integer damagesPlayer = playerService.getDamagesPlayerSkill(attackDungeonDtoRequest.skillId);
-        Integer damagesMonster = monsterService.getDamagesMonsterSkill(attackDungeonDtoRequest.monsterId);
-        return new AttackDungeonDtoResponse(damagesPlayer, damagesMonster);
+        SkillEntity playerSkillEntity = playerService.getDamagesPlayerSkill(attackDungeonDtoRequest.skillId);
+        SkillEntity monsterSkillEntity = monsterSkillService.getDamagesMonsterSkill(attackDungeonDtoRequest.monsterId);
+        AttackDungeonDtoResponse.AttackMonsterDtoResponse attackMonsterDtoResponse =
+                new AttackDungeonDtoResponse.AttackMonsterDtoResponse(monsterSkillEntity.name, monsterSkillEntity.damage);
+        AttackDungeonDtoResponse.AttackPlayerDtoResponse attackPlayerDtoResponse =
+                new AttackDungeonDtoResponse.AttackPlayerDtoResponse(playerSkillEntity.name, playerSkillEntity.damage, playerSkillEntity.cost);
+        return new AttackDungeonDtoResponse(attackPlayerDtoResponse, attackMonsterDtoResponse);
     }
 }

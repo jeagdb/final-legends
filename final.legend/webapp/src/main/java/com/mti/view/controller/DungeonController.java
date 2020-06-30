@@ -48,7 +48,7 @@ public class DungeonController {
     }
 
     @PutMapping(path = "{id}")
-    public AttackDungeonDtoResponse attackDungeon(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
+    public AttackDungeonDtoResponse attackDungeonMonster(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
         Integer damagesPlayer = playerService.getDamagesPlayerSkill(attackDungeonDtoRequest.skillId);
         Integer damagesMonster = monsterService.getDamagesMonsterSkill(attackDungeonDtoRequest.monsterId);
         return new AttackDungeonDtoResponse(damagesPlayer, damagesMonster);

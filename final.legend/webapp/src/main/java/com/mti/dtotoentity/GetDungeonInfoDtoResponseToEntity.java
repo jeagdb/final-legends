@@ -1,12 +1,11 @@
 package com.mti.dtotoentity;
 
-import com.mti.domain.entity.DungeonEntity;
 import com.mti.domain.entity.DungeonInfoEntity;
 import com.mti.legendsdb.utils.scope.ConvertService;
-import com.mti.persistence.model.DungeonModel;
 import com.mti.view.dto.player.GetDungeonInfoDtoResponse;
 import utils.Converter;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,12 @@ public class GetDungeonInfoDtoResponseToEntity implements Converter.Reversible<G
         from.getMonsters().stream().forEach(monster -> {
             GetDungeonInfoDtoResponse.MonsterDtoResponse newMonster =
                     new GetDungeonInfoDtoResponse.MonsterDtoResponse(monster.id,
-                            monster.name);
+                            new GetDungeonInfoDtoResponse.StatDtoResponse(monster.stat.health,
+                                    monster.stat.mana,
+                                    monster.stat.attack,
+                                    monster.stat.defense,
+                                    monster.stat.intelligence,
+                                    monster.stat.agility), monster.name, monster.xp);
             monsters.add(newMonster);
         });
         return new GetDungeonInfoDtoResponse(from.getDungeonName(), monsters);

@@ -22,6 +22,11 @@ public class PlayerService implements CanLog{
         this.playerModelToEntity = playerModelToEntity;
     }
 
+    public Integer getDamagesPlayerSkill(Integer skillId) {
+        // skill reposition
+        return 10;
+    }
+
     public List<PlayerEntity> findAllPlayers() {
         final var allPlayerModel = IterableUtils.toList(playerRepository.findAll());
         return allPlayerModel.stream()

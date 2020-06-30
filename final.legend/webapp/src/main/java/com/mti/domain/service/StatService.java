@@ -6,6 +6,7 @@ import com.mti.persistence.model.StatModel;
 import com.mti.persistence.repository.StatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import utils.log.CanLog;
 
 import java.util.HashMap;

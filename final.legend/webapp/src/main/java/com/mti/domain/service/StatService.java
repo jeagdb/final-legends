@@ -6,6 +6,7 @@ import com.mti.modeltoentity.StatModelToEntity;
 import com.mti.persistence.model.StatModel;
 import com.mti.persistence.repository.StatRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StatService {
@@ -16,6 +17,7 @@ public class StatService {
         this.statModelToEntity = statModelToEntity;
     }
 
+    @Transactional
     public StatEntity generatePlayerStatsWithVocation(Integer vocationId) {
         StatModel statModel = new StatModel();
         // random /!\

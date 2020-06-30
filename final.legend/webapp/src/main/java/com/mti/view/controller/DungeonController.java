@@ -3,8 +3,11 @@ package com.mti.view.controller;
 import com.mti.domain.entity.DungeonEntity;
 import com.mti.domain.entity.DungeonInfoEntity;
 import com.mti.domain.service.DungeonService;
+import com.mti.domain.service.MonsterService;
+import com.mti.domain.service.PlayerService;
 import com.mti.dtotoentity.GetDungeonInfoDtoResponseToEntity;
 import com.mti.view.dto.player.AttackDungeonDtoRequest;
+import com.mti.view.dto.player.AttackDungeonDtoResponse;
 import com.mti.view.dto.player.GetAllDungeonsDtoResponse;
 import com.mti.view.dto.player.GetDungeonInfoDtoResponse;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +20,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/dungeons")
 public class DungeonController {
 
-    private final DungeonService dungeonService;
+    @Resource
+    public DungeonService dungeonService;
+
+    @Resource
+    public PlayerService playerService;
+
+    @Resource
+    public MonsterService monsterService;
 
     @Resource
     public GetDungeonInfoDtoResponseToEntity getDungeonInfoDtoResponseToEntity;
 
-    public DungeonController(DungeonService dungeonService) {
-        this.dungeonService = dungeonService;
+    public DungeonController() {
     }
 
     @GetMapping("/")
@@ -39,8 +48,9 @@ public class DungeonController {
     }
 
     @PutMapping(path = "{id}")
-    public void attackDungeon(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
-        String skill = attackDungeonDtoRequest.skill;
-        // check mana
+    public AttackDungeonDtoResponse attackDungeon(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
+        Integer damagesPlayer = playerService.getDamagesPlayerSkill(attackDungeonDtoRequest.skillId);
+        Integer damagesMonster = monsterService.getDamagesMonsterSkill(attackDungeonDtoRequest.monsterId);
+        return new AttackDungeonDtoResponse(damagesPlayer, damagesMonster);
     }
 }

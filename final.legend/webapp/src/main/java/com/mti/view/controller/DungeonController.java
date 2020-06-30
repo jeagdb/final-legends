@@ -46,8 +46,8 @@ public class DungeonController {
         return getDungeonInfoDtoResponseToEntity.revertConvert(dungeonInfoEntities);
     }
 
-    @PutMapping(path = "{id}")
-    public AttackDungeonDtoResponse attackDungeonMonster(@PathVariable("id") int dungeonId, final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
+    @PutMapping(path = "/")
+    public AttackDungeonDtoResponse attackDungeonMonster(final @RequestBody AttackDungeonDtoRequest attackDungeonDtoRequest) {
         SkillEntity playerSkillEntity = playerService.getDamagesPlayerSkill(attackDungeonDtoRequest.skillId);
         SkillEntity monsterSkillEntity = monsterSkillService.getDamagesMonsterSkill(attackDungeonDtoRequest.monsterId);
         AttackDungeonDtoResponse.AttackMonsterDtoResponse attackMonsterDtoResponse =
